@@ -16,4 +16,5 @@ def solve(points):
     if plen < 2:
         return []
 
-    return [(points[i], points[(i+1) % plen]) for i in range(plen)]
+    if plen == 2:
+        return [(points[0], points[1])]
