@@ -16,3 +16,6 @@ def test_non_list():
     with pytest.raises(TypeError):
         solve(True)
 
+def test_list_of_one():
+    """ the (E)MST solution to a list of one is an empty list """
+    assert solve([True]) == [], __doc__

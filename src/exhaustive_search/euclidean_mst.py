@@ -12,7 +12,8 @@ def solve(points):
     if not isinstance(points, list):
         raise TypeError("solve expects a list of n Point objects, received %s" % points)
 
-    # clearly incorrect
     plen = len(points)
+    if plen < 2:
+        return []
 
     return [(points[i], points[(i+1) % plen]) for i in range(plen)]
