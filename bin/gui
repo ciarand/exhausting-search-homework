@@ -13,6 +13,7 @@ import math, random, time, tkinter, sys
 
 from exhaustive_search.euclidean_mst import solve as solve_mst
 from exhaustive_search.euclidean_tsp import solve as solve_tsp
+from exhaustive_search.point import Point
 
 # constant parameters
 CANVAS_WIDTH = 800
@@ -23,14 +24,6 @@ MST_EDGE_COLOR = 'red'
 TSP_EDGE_COLOR = 'navy'
 POINT_RADIUS = 3
 OUTLINE_WIDTH = 2
-
-class Point:
-    """ Represents a single 2D point. """
-
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
 ###############################################################################
 # The following code is responsible for generating instances of random
 # points and visualizing them. You can leave it unchanged.
