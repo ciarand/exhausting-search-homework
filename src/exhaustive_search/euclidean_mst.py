@@ -1,5 +1,7 @@
 """ Provides a solution (`solve`) to the EMST problem. """
 
+from .graph import Graph
+
 # Euclidean Minimum Spanning Tree (MST) algorithm
 #
 # input: a list of n Point objects
@@ -9,12 +11,13 @@
 # of the input points
 def solve(points):
     """ Solves the EMST problem """
+    # it's not a list
     if not isinstance(points, list):
         raise TypeError("solve expects a list of n Point objects, received %s" % points)
 
-    plen = len(points)
-    if plen < 2:
+    g = Graph(points)
+
+    if g.num_edges() < 1:
         return []
 
-    if plen == 2:
-        return [(points[0], points[1])]
+    return []
