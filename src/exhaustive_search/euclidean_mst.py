@@ -15,6 +15,7 @@ def solve(points):
     if not isinstance(points, list):
         raise TypeError("solve expects a list of n Point objects, received %s" % points)
 
+    # NOTE: this does some initialization work
     graph = Graph(points)
 
     if graph.num_edges() < 1:
