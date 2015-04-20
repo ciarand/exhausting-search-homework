@@ -6,6 +6,22 @@ import pytest
 from exhaustive_search.point import Point
 from exhaustive_search.euclidean_mst import solve
 
+def compare_solutions(actual, expected):
+    assert len(actual) == len(expected), "expected %d to equal %d" % (len(actual), len(expected))
+
+    for result in actual:
+        aleft, aright = result
+        found = False
+
+        for expectation in expected:
+            eleft, eright = expectation
+
+            if (aleft == eleft and aright == eright) or (aright == eleft and aleft == eright):
+                found = True
+                continue
+
+        assert found, "expected to find edge (%s, %s) in result" % (aleft, aright)
+
 def test_empty_mst_list():
     """ the (E)MST solution to an empty list is an empty list """
     assert solve([]) == [], __doc__
@@ -25,25 +41,31 @@ def test_list_of_two():
     """ the (E)MST solution to a list of two points (i.e. [a, b]) is a list
     containing a tuple of points (i.e. [(a, b)]) """
     one, two = Point(3, 1), Point(1, 3)
-    assert solve([one, two]) == [(one, two)], __doc__
+
+    actual = solve([one, two])
+    assert actual == [(one, two)] or actual == [(two, one)], __doc__
 
 def test_triangle():
     """ Given a list of points L:
 
-        L = [Point(0, 0), Point(3, 3), Point(6, 0)]
+        L = [Point(0, 0), Point(3, 0), Point(6, 0)]
 
     The solution is:
 
-        [(L[0], L[1]), (L[1], L[2])]
+        [(Point(0, 0), Point(3, 0)), (Point(3, 0), Point(6, 0))]
     """
-    graph = [Point(0, 0), Point(3, 3), Point(6, 0)]
+    graph = [Point(0, 0), Point(3, 0), Point(6, 0)]
 
     actual = solve(graph)
+
+    compare_solutions(actual, [(Point(0, 0), Point(3, 0)), (Point(3, 0), Point(6, 0))])
 
     for result in actual:
         left, right = result
 
         if left == Point(0, 0) or left == Point(6, 0):
-            assert right == Point(3, 3), __doc__
+            assert right == Point(3, 0), \
+                "expected right (%s) to == %s (left is %s)" % (right, Point(3, 0), left)
         else:
-            assert right == Point(0, 0) or right == Point(6, 0), __doc__
+            assert right == Point(0, 0) or right == Point(6, 0), \
+                "expected right (%s) to == %s or %s" % (right, Point(0, 0), Point(6, 0))

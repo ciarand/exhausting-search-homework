@@ -22,32 +22,35 @@ def solve(points):
         return []
 
     edges = graph.edges
-    num_points = graph.num_points()
-    start = edges.pop()
+    points = graph.points
+    num_points = len(graph.points)
+
+    start = points.pop()
     spanned = set([start])
-    solution = [(start.left, start.right)]
+    solution = []
 
-    print("beginning main loop")
-    while len(spanned) < num_points - 1:
+    while len(solution) < num_points - 1:
         smallest_edge = None
+        candidate_point = None
 
-        for spanned_edge in spanned:
-            print("inner loop (spanned)")
+        for spanned_point in spanned:
             for candidate_edge in edges:
-                print("inner loop (candidate_edge)")
-                # if the candidate isn't connected to our lil spanned set,
-                # ignore it
-                if not candidate_edge.connected_to(spanned_edge.left) \
-                        and not candidate_edge.connected_to(spanned_edge.right):
-
+                # if the candidate isn't connected to our lil spanned set, ignore it
+                if not candidate_edge.connected_to(spanned_point):
                     continue
 
                 if smallest_edge is None or candidate_edge.weight() < smallest_edge.weight():
                     smallest_edge = candidate_edge
 
-        print("extending edge %s" % smallest_edge)
+                    if spanned_point == smallest_edge.left:
+                        candidate_point = smallest_edge.right
+                    else:
+                        candidate_point = smallest_edge.left
+
+        spanned.add(candidate_point)
+
         edges.remove(smallest_edge)
-        spanned.add(smallest_edge)
-        solution.append((smallest_edge.left, smallest_edge.right))
+        extension = (smallest_edge.left, smallest_edge.right)
+        solution.append(extension)
 
     return solution

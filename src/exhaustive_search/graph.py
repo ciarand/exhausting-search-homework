@@ -42,6 +42,9 @@ class Edge:
     def __hash__(self):
         return hash(''.join(str(v) for v in [self.left.x, self.left.y]))
 
+    def __str__(self):
+        return "Edge(left=%s, right=%s)" % (self.left, self.right)
+
 class Graph:
     """ Graph represents a collection of edges and points """
     def __init__(self, points):
