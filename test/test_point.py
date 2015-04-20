@@ -4,8 +4,8 @@ from exhaustive_search.point import Point
 
 def test_equality_is_based_on_value():
     """ equality between two Points should be based off value, not address """
-    # 50 ** 2 == 2500 runs
-    maximum = 50
+    # ~1000 runs
+    maximum = 34
     universe_1, universe_a = [], []
 
     for x in range(maximum):

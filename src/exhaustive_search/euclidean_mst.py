@@ -15,9 +15,38 @@ def solve(points):
     if not isinstance(points, list):
         raise TypeError("solve expects a list of n Point objects, received %s" % points)
 
-    g = Graph(points)
+    graph = Graph(points)
 
-    if g.num_edges() < 1:
+    if graph.num_edges() < 1:
         return []
 
-    return []
+    edges = graph.edges
+    num_points = graph.num_points()
+    start = edges.pop()
+    spanned = set([start])
+    solution = [(start.left, start.right)]
+
+    print("beginning main loop")
+    while len(spanned) < num_points - 1:
+        smallest_edge = None
+
+        for spanned_edge in spanned:
+            print("inner loop (spanned)")
+            for candidate_edge in edges:
+                print("inner loop (candidate_edge)")
+                # if the candidate isn't connected to our lil spanned set,
+                # ignore it
+                if not candidate_edge.connected_to(spanned_edge.left) \
+                        and not candidate_edge.connected_to(spanned_edge.right):
+
+                    continue
+
+                if smallest_edge is None or candidate_edge.weight() < smallest_edge.weight():
+                    smallest_edge = candidate_edge
+
+        print("extending edge %s" % smallest_edge)
+        edges.remove(smallest_edge)
+        spanned.add(smallest_edge)
+        solution.append((smallest_edge.left, smallest_edge.right))
+
+    return solution
