@@ -1,9 +1,18 @@
-###############################################################################
-# CPSC 335 Project 2
-# Spring 2015
-#
-# Authors: <FILL IN YOUR NAME(S) HERE>
-###############################################################################
+#!/usr/bin/env python3
+
+"""
+================================================================================
+CPSC 335 Project 2
+Spring 2015
+
+Authors: Ciaran Downey <ciarand@csu.fullerton.edu>
+================================================================================
+"""
+
+import math, random, time, tkinter, sys
+
+from exhaustive_search.euclidean_mst import solve as solve_mst
+from exhaustive_search.euclidean_tsp import solve as solve_tsp
 
 # constant parameters
 CANVAS_WIDTH = 800
@@ -15,35 +24,12 @@ TSP_EDGE_COLOR = 'navy'
 POINT_RADIUS = 3
 OUTLINE_WIDTH = 2
 
-import enum, math, random, time, tkinter
-
-# Class representing one 2D point.
 class Point:
+    """ Represents a single 2D point. """
+
     def __init__(self, x, y):
         self.x = x
         self.y = y
-
-# Euclidean Minimum Spanning Tree (MST) algorithm
-#
-# input: a list of n Point objects
-#
-# output: a list of (p, q) tuples, where p and q are each input Point
-# objects, and (p, q) should be connected in a minimum spanning tree
-# of the input points
-def euclidean_mst(points):
-    # clearly incorrect
-    n = len(points)
-    return [ (points[i], points[(i+1) % n]) for i in range(n) ]
-
-# Euclidean Traveling Salesperson (TSP) algorithm
-#
-# input: a list of n Point objects
-#
-# output: a permutation of the points corresponding to a correct
-# Hamiltonian cycle of minimum total distance
-def euclidean_tsp(points):
-    # clearly incorrect
-    return points
 
 ###############################################################################
 # The following code is responsible for generating instances of random
@@ -99,7 +85,7 @@ def clockwise(points):
 def generate_points(n):
     print('generating n=' + str(n) + ' points...')
     return random_points(n)
-   
+
 
 def time_trial(message, points, func):
     print(message)
@@ -114,7 +100,7 @@ def time_trial(message, points, func):
 
 def setup_canvas(points):
     w = tkinter.Canvas(tkinter.Tk(),
-                       width=CANVAS_WIDTH, 
+                       width=CANVAS_WIDTH,
                        height=CANVAS_HEIGHT)
     w.pack()
 
@@ -134,7 +120,7 @@ def draw_edge(w, p, q, color):
 
 def mst_trial(n):
     points = generate_points(n)
-    edges = time_trial('minimum spanning tree...', points, euclidean_mst)
+    edges = time_trial('minimum spanning tree...', points, solve_mst)
 
     w = setup_canvas(points)
     for (p, q) in edges:
@@ -144,7 +130,7 @@ def mst_trial(n):
 
 def tsp_trial(n):
     points = generate_points(n)
-    cycle = time_trial('traveling salesperson...', points, euclidean_tsp)
+    cycle = time_trial('traveling salesperson...', points, solve_tsp)
 
     w = setup_canvas(points)
     for i in range(n):
@@ -165,8 +151,15 @@ def tsp_trial(n):
 # gather the evidence you need.
 ###############################################################################
 def main():
-    mst_trial(1000)
-    #tsp_trial(9)
+    if len(sys.argv) < 2:
+        sys.exit("Usage: %s mst or %s tsp" % (sys.argv[0], sys.argv[0]))
+
+    if sys.argv[1].lower() == "mst":
+        mst_trial(1000)
+    elif sys.argv[1].lower() == "tsp":
+        tsp_trial(9)
+    else:
+        sys.exit("unrecognized algorithm %s" % sys.argv[1])
 
 if __name__ == '__main__':
     main()

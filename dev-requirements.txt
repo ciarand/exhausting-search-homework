@@ -1,0 +1,5 @@
+-r requirements.txt
+
+pylint==1.4.3
+tox==1.9.2
+virtualenv==12.1.1
