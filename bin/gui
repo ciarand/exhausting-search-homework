@@ -147,10 +147,14 @@ def main():
     if len(sys.argv) < 2:
         sys.exit("Usage: %s mst or %s tsp" % (sys.argv[0], sys.argv[0]))
 
+    num_trials = None
+    if len(sys.argv) == 3:
+        num_trials = int(sys.argv[2])
+
     if sys.argv[1].lower() == "mst":
-        mst_trial(1000)
+        mst_trial(1000 if not num_trials else num_trials)
     elif sys.argv[1].lower() == "tsp":
-        tsp_trial(9)
+        tsp_trial(9 if not num_trials else num_trials)
     else:
         sys.exit("unrecognized algorithm %s" % sys.argv[1])
 
