@@ -1,9 +1,111 @@
 = Exhaustive Search
 Ciaran Downey <ciarand@csu.fullerton.edu>
+:imagesdir: img
 
 This is my solution to project 2, "exhaustive search," which involves
 implementing solutions to the Euclidean versions of the minimum spanning
 tree and traveling salesman problems.
+
+== Examples
+
+=== MST with 100 nodes
+
+----
+$ ./bin/gui mst 100
+generating n=100 points...
+minimum spanning tree...
+elapsed time = 0.018632713006809354 seconds
+----
+
+image::mst_100.png[]
+
+=== MST with 1000 nodes
+
+----
+$ ./bin/gui mst 1000
+generating n=1000 points...
+minimum spanning tree...
+elapsed time = 2.581915371993091 seconds
+----
+
+image::mst_1000.png[]
+
+=== MST with 2000 nodes
+
+----
+$ ./bin/gui mst 2000
+generating n=2000 points...
+minimum spanning tree...
+elapsed time = 15.229780650988687 seconds
+----
+
+image::mst_2000.png[]
+
+=== MST with 3000 nodes
+
+----
+$ ./bin/gui mst 3000
+generating n=3000 points...
+minimum spanning tree...
+elapsed time = 32.279351324017625 seconds
+----
+
+image::mst_3000.png[]
+
+=== MST with 5000 nodes
+
+----
+$ ./bin/gui mst 5000
+generating n=5000 points...
+minimum spanning tree...
+elapsed time = 108.07127827196382 seconds
+----
+
+image::mst_5000.png[]
+
+=== MST with 10000 nodes
+
+----
+$ ./bin/gui mst 10000
+generating n=10000 points...
+minimum spanning tree...
+elapsed time = 675.383033287013 seconds
+----
+
+image::mst_10000.png[]
+
+=== TSP with 9 nodes
+
+----
+$ ./bin/gui tsp 9
+generating n=9 points...
+traveling salesperson...
+elapsed time = 3.459275536995847 seconds
+----
+
+image::tsp_9.png[]
+
+=== TSP with 10 nodes
+
+----
+$ ./bin/gui tsp 10
+generating n=10 points...
+traveling salesperson...
+elapsed time = 38.96019809198333 seconds
+----
+
+image::tsp_10.png[]
+
+=== TSP with 11 nodes
+
+----
+$ ./bin/gui tsp 11
+generating n=11 points...
+traveling salesperson...
+elapsed time = 524.7635569970007 seconds
+----
+
+image::tsp_11.png[]
 
 == Structure
 
