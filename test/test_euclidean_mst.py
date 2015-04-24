@@ -4,23 +4,17 @@ Tree (EMST) problem """
 import pytest
 
 from exhaustive_search.point import Point
-from exhaustive_search.euclidean_mst import solve
+from exhaustive_search.euclidean_mst import solve, edist
 
 def compare_solutions(actual, expected):
     assert len(actual) == len(expected), "expected %d to equal %d" % (len(actual), len(expected))
 
-    for result in actual:
-        aleft, aright = result
-        found = False
+    assert sorted(actual, key=keyfunc) == sorted(expected, key=keyfunc)
 
-        for expectation in expected:
-            eleft, eright = expectation
+def keyfunc(tpl):
+    left, right = tpl
 
-            if (aleft == eleft and aright == eright) or (aright == eleft and aleft == eright):
-                found = True
-                continue
-
-        assert found, "expected to find edge (%s, %s) in result" % (aleft, aright)
+    return edist(left, right)
 
 def test_empty_mst_list():
     """ the (E)MST solution to an empty list is an empty list """
@@ -35,7 +29,7 @@ def test_non_list():
 
 def test_list_of_one():
     """ the (E)MST solution to a list of one is an empty list """
-    assert solve([True]) == [], __doc__
+    assert solve([Point(0, 0)]) == [], __doc__
 
 def test_list_of_two():
     """ the (E)MST solution to a list of two points (i.e. [a, b]) is a list
@@ -43,12 +37,12 @@ def test_list_of_two():
     one, two = Point(3, 1), Point(1, 3)
 
     actual = solve([one, two])
-    assert actual == [(one, two)] or actual == [(two, one)], __doc__
+    compare_solutions(actual, [(one, two)])
 
 def test_triangle():
     """ Given a list of points L:
 
-        L = [Point(0, 0), Point(3, 0), Point(6, 0)]
+        L = [Point(0, 0), Point(3, 0), Point(0, 6)]
 
     The solution is:
 
