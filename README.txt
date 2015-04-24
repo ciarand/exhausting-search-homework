@@ -112,8 +112,8 @@ image::tsp_11.png[]
 The app is distributed as a pip bundle. This helps make sure that tests are
 sanitary (i.e. no unresolved dependencies at runtime on a foreign system).
 
-The authors have provided some helpful `make` commands to ease the process
-of installation and testing.
+There are some helpful `make` commands to ease the process of installation
+and testing.
 
 The actual `euclidean_mst` and `euclidean_tsp` functions are defined in the
 `src/exhaustive_search` module. They are unit tested with `pytest`
